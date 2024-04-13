@@ -9,13 +9,19 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
+   /* List<Product> findByProductIdIn(List<String> productIds, int limit);
 
-    List<Product> findByShopperId(String shopperId, int limit);
+    List<Product> findByProductIdInAndCategory(List<String> productIds, String category, int limit);
 
-    List<Product> findByShopperIdAndCategory(String shopperId, String category, int limit);
+    List<Product> findByProductIdInAndBrand(List<String> productIds, String brand, int limit);
 
-    List<Product> findByShopperIdAndBrand(String shopperId, String brand, int limit);
+    List<Product> findByProductIdInAndCategoryAndBrand(List<String> productIds, String category, String brand, int limit);
+*/
+    List<Product> findByProductIdIn(List<String> productIds);
 
-    @Query("SELECT p FROM Product p WHERE p.shopperId = ?1 AND p.category = ?2 AND p.brand = ?3")
-    List<Product> findByShopperIdAndCategoryAndBrand(String shopperId, String category, String brand, int limit);
+    List<Product> findByProductIdInAndCategory(List<String> productIds, String category);
+
+    List<Product> findByProductIdInAndBrand(List<String> productIds, String brand);
+
+    List<Product> findByProductIdInAndCategoryAndBrand(List<String> productIds, String category, String brand);
 }

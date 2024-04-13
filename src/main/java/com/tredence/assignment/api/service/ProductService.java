@@ -14,16 +14,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProductsByShopper(String shopperId, String category, String brand, int limit) {
-        // Implement logic to fetch products by shopper ID with optional filters
-        if (category != null && brand != null) {
-            return productRepository.findByShopperIdAndCategoryAndBrand(shopperId, category, brand, limit);
-        } else if (category != null) {
-            return productRepository.findByShopperIdAndCategory(shopperId, category, limit);
-        } else if (brand != null) {
-            return productRepository.findByShopperIdAndBrand(shopperId, brand, limit);
-        } else {
-            return productRepository.findByShopperId(shopperId, limit);
-        }
+    public void saveProducts(List<Product> products) {
+        productRepository.saveAll(products);
     }
 }

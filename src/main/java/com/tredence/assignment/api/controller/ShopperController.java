@@ -1,13 +1,19 @@
 package com.tredence.assignment.api.controller;
 
+import com.tredence.assignment.api.entity.Product;
 import com.tredence.assignment.api.entity.Shopper;
 import com.tredence.assignment.api.service.ShopperService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping(value = "/api/shopper")
 public class ShopperController {
+
 
     private final ShopperService shopperService;
 
@@ -15,7 +21,8 @@ public class ShopperController {
         this.shopperService = shopperService;
     }
 
-    @PostMapping("/api/personalized-info")
+    //API to receive and savi personalized details of shopper
+    @PostMapping("/personalized-info")
     public ResponseEntity<String> receivePersonalizedInfo(@RequestBody Shopper shopper) {
         try {
             shopperService.saveShopper(shopper);
@@ -25,17 +32,14 @@ public class ShopperController {
         }
     }
 
-    @GetMapping("/api/shopper/{shopperId}")
-    public ResponseEntity<Object> getShopperDetails(@PathVariable String shopperId) {
-        try {
-            Shopper shopper = shopperService.getShopperById(shopperId);
-            if (shopper != null) {
-                return ResponseEntity.ok(shopper);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to retrieve shopper details.");
-        }
+//    Retrieve products by shopper id
+    @GetMapping("/{shopperId}")
+    public ResponseEntity<List<Product>> getProductsByShopper(@PathVariable String shopperId,
+                                                              @RequestParam(required = false) String category,
+                                                              @RequestParam(required = false) String brand,
+                                                              @RequestParam(defaultValue = "10") int limit) {
+        // Implement logic to fetch products by shopper ID with optional filters
+        List<Product> products = shopperService.getProductsByShopperId(shopperId, category, brand, limit);
+        return ResponseEntity.ok(products);
     }
 }
