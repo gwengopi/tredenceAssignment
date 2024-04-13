@@ -16,5 +16,9 @@ public class ShopperService {
     public void saveShopper(Shopper shopper) {
         shopperRepository.save(shopper);
     }
+
+    public Shopper getShopperById(String shopperId) {
+        return shopperRepository.findById(shopperId).orElse(null);
+    }
 }
 
