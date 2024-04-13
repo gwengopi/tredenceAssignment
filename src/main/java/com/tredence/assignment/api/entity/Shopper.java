@@ -22,5 +22,4 @@ public class Shopper {
     @JoinColumn(name = "shopper_id", referencedColumnName = "shopper_id")
     private List<ShelfItem> shelf;
 
-    // Constructors, getters, and setters
 }
